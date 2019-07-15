@@ -37,14 +37,14 @@ namespace CaixaEletronico.Business
         {
             if (quantidadeNotas10 > 0 && valorSaque >= 10)
             {
-                var mod = (int)(valorSaque / 10);
-                if (mod > quantidadeNotas10)
+                var cedulasNecessarias = (int)(valorSaque / 10);
+                if (cedulasNecessarias > quantidadeNotas10)
                 {
-                    mod = quantidadeNotas10;
+                    cedulasNecessarias = quantidadeNotas10;
                 }
 
-                carteira.Notas10 -= mod * 10;
-                valorSaque -= mod * 10;
+                carteira.Notas10 -= cedulasNecessarias * 10;
+                valorSaque -= cedulasNecessarias * 10;
             }
         }
 
@@ -52,15 +52,15 @@ namespace CaixaEletronico.Business
         {
             if (quantidadeNotas20 > 0 && valorSaque >= 20)
             {
-                var mod = (int)(valorSaque / 20);
+                var cedulasNecessarias = (int)(valorSaque / 20);
 
-                if (mod > quantidadeNotas20)
+                if (cedulasNecessarias > quantidadeNotas20)
                 {
-                    mod = quantidadeNotas20;
+                    cedulasNecessarias = quantidadeNotas20;
                 }
 
-                carteira.Notas20 -= mod * 20;
-                valorSaque -= mod * 20;
+                carteira.Notas20 -= cedulasNecessarias * 20;
+                valorSaque -= cedulasNecessarias * 20;
             }
         }
 
@@ -68,15 +68,15 @@ namespace CaixaEletronico.Business
         {
             if (quantidadeNotas50 > 0 && valorSaque >= 50)
             {
-                var mod = (int)(valorSaque / 50);
+                var cedulasNecessarias = (int)(valorSaque / 50);
 
-                if (mod > quantidadeNotas50)
+                if (cedulasNecessarias > quantidadeNotas50)
                 {
-                    mod = quantidadeNotas50;
+                    cedulasNecessarias = quantidadeNotas50;
                 }
 
-                carteira.Notas50 -= mod * 50;
-                valorSaque -= mod * 50;
+                carteira.Notas50 -= cedulasNecessarias * 50;
+                valorSaque -= cedulasNecessarias * 50;
             }
         }
     }

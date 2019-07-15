@@ -5,12 +5,12 @@ using CaixaEletronico.Model;
 
 namespace CaixaEletronico.Processors
 {
-    public class CaixaEletronicoProcessors : ICaixaEletronico
+    public class CaixaEletronicoProcessor : ICaixaEletronico
     {
         private readonly IDepositar _deposito;
         private readonly ISacar _saque;
 
-        public CaixaEletronicoProcessors()
+        public CaixaEletronicoProcessor()
         {
             _deposito = new Depositar();
             _saque = new Sacar();
@@ -45,10 +45,10 @@ namespace CaixaEletronico.Processors
             Console.ReadKey();
         }
 
-        public int AdicionarQuantidades(Carteira carteira, Notas nota)
+        public int Depositar(Carteira carteira, Notas nota)
         {
             Console.Clear();
-            Console.WriteLine($"Digite a quantidade de cédulas:");
+            Console.WriteLine("Digite a quantidade de cédulas:");
             var quantidade = Convert.ToInt32(Console.ReadLine());
 
             switch (nota)
@@ -72,7 +72,7 @@ namespace CaixaEletronico.Processors
         public void RealizarSaque(ref Carteira carteira)
         {
             Console.Clear();
-            Console.WriteLine($"Digite o valor para saque:");
+            Console.WriteLine("Digite o valor para saque:");
             var valorSaque = Convert.ToDecimal(Console.ReadLine());
 
             var resultado = _saque.Saque(ref carteira, valorSaque);

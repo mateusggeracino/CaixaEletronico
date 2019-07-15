@@ -8,24 +8,21 @@ namespace CaixaEletronico
     {
         static void Main(string[] args)
         {
-            ICaixaEletronico caixaEletronico = new CaixaEletronicoProcessors();
+            ICaixaEletronico caixaEletronico = new CaixaEletronicoProcessor();
             var carteira = new Carteira();
             var sair = false;
-
-            do
-            {
+            do{
                 var opcao = caixaEletronico.MostrarMenu();
-
                 switch (opcao)
                 {
                     case 1:
-                        caixaEletronico.AdicionarQuantidades(carteira, Notas.Notas10);
+                        caixaEletronico.Depositar(carteira, Notas.Notas10);
                         break;
                     case 2:
-                        caixaEletronico.AdicionarQuantidades(carteira, Notas.Notas20);
+                        caixaEletronico.Depositar(carteira, Notas.Notas20);
                         break;
                     case 3:
-                        caixaEletronico.AdicionarQuantidades(carteira, Notas.Notas50);
+                        caixaEletronico.Depositar(carteira, Notas.Notas50);
                         break;
                     case 4:
                         caixaEletronico.RealizarSaque(ref carteira);
@@ -35,8 +32,6 @@ namespace CaixaEletronico
                         break;
                     case 6:
                         sair = true;
-                        break;
-                    default:
                         break;
                 }
 
