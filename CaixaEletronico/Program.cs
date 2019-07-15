@@ -1,4 +1,6 @@
-﻿using CaixaEletronico.Model;
+﻿using CaixaEletronico.Interfaces;
+using CaixaEletronico.Model;
+using CaixaEletronico.Processors;
 
 namespace CaixaEletronico
 {
@@ -6,7 +8,7 @@ namespace CaixaEletronico
     {
         static void Main(string[] args)
         {
-            var caixaEletronico = new Processors.CaixaEletronico();
+            ICaixaEletronico caixaEletronico = new CaixaEletronicoProcessors();
             var carteira = new Carteira();
             var sair = false;
 
@@ -26,7 +28,7 @@ namespace CaixaEletronico
                         caixaEletronico.AdicionarQuantidades(carteira, Notas.Notas50);
                         break;
                     case 4:
-                        //Adicionar regra de saque
+                        caixaEletronico.RealizarSaque(ref carteira);
                         break;
                     case 5:
                         caixaEletronico.MostrarRelatorio(carteira);

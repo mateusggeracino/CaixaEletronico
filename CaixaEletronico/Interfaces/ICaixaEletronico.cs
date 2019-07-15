@@ -7,5 +7,6 @@ namespace CaixaEletronico.Interfaces
         int MostrarMenu();
         void MostrarRelatorio(Carteira carteira);
         int AdicionarQuantidades(Carteira carteira, Notas nota);
+        void RealizarSaque(ref Carteira carteira);
     }
 }

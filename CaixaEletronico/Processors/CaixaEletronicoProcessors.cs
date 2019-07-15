@@ -5,14 +5,15 @@ using CaixaEletronico.Model;
 
 namespace CaixaEletronico.Processors
 {
-    public class CaixaEletronico : ICaixaEletronico
+    public class CaixaEletronicoProcessors : ICaixaEletronico
     {
         private readonly IDepositar _deposito;
         private readonly ISacar _saque;
 
-        public CaixaEletronico()
+        public CaixaEletronicoProcessors()
         {
             _deposito = new Depositar();
+            _saque = new Sacar();
         }
 
         public int MostrarMenu()
@@ -66,6 +67,18 @@ namespace CaixaEletronico.Processors
             Console.Clear();
 
             return Convert.ToInt32(quantidade);
+        }
+
+        public void RealizarSaque(ref Carteira carteira)
+        {
+            Console.Clear();
+            Console.WriteLine($"Digite o valor para saque:");
+            var valorSaque = Convert.ToDecimal(Console.ReadLine());
+
+            var resultado = _saque.Saque(ref carteira, valorSaque);
+            Console.WriteLine(resultado);
+            Console.WriteLine("Pressione enter para continuar");
+            Console.ReadKey();
         }
     }
 }

@@ -4,6 +4,8 @@ namespace CaixaEletronico.Interfaces
 {
     public interface ISacar
     {
-        void Saque(ref Carteira carteira, decimal valor);
+        string Saque(ref Carteira carteira, decimal valor);
+
+        string RealizarSaque(ref Carteira carteira, decimal valorSaque);
     }
 }
