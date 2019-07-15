@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CaixaEletronico.Model;
+﻿using CaixaEletronico.Model;
 
 namespace CaixaEletronico
 {
@@ -10,26 +8,22 @@ namespace CaixaEletronico
         {
             var caixaEletronico = new Processors.CaixaEletronico();
             var carteira = new Carteira();
-            int input;
             var sair = false;
+
             do
             {
-
                 var opcao = caixaEletronico.MostrarMenu();
 
                 switch (opcao)
                 {
                     case 1:
-                        input = caixaEletronico.AdicionarQuantidades();
-                        carteira.Notas10 += Convert.ToInt32(input);
+                        caixaEletronico.AdicionarQuantidades(carteira, Notas.Notas10);
                         break;
                     case 2:
-                        input = caixaEletronico.AdicionarQuantidades();
-                        carteira.Notas20 += Convert.ToInt32(input);
+                        caixaEletronico.AdicionarQuantidades(carteira, Notas.Notas20);
                         break;
                     case 3:
-                        input = caixaEletronico.AdicionarQuantidades();
-                        carteira.Notas50 += Convert.ToInt32(input);
+                        caixaEletronico.AdicionarQuantidades(carteira, Notas.Notas50);
                         break;
                     case 4:
                         //Adicionar regra de saque
@@ -45,10 +39,6 @@ namespace CaixaEletronico
                 }
 
             } while (!sair);
-
-
-
-
         }
     }
 }

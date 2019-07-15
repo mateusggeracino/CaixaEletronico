@@ -5,7 +5,7 @@ namespace CaixaEletronico.Interfaces
     public interface ICaixaEletronico
     {
         int MostrarMenu();
-        void MostrarRelatorio(Carteira quantidadeNotas);
-        int AdicionarQuantidades();
+        void MostrarRelatorio(Carteira carteira);
+        int AdicionarQuantidades(Carteira carteira, Notas nota);
     }
 }

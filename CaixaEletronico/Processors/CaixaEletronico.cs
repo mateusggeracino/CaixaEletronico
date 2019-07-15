@@ -7,13 +7,12 @@ namespace CaixaEletronico.Processors
 {
     public class CaixaEletronico : ICaixaEletronico
     {
-        private readonly IDeposito _deposito;
-        private readonly ISaque _saque;
+        private readonly IDepositar _deposito;
+        private readonly ISacar _saque;
 
         public CaixaEletronico()
         {
             _deposito = new Depositar();
-            _saque = new Sacar();
         }
 
         public int MostrarMenu()
@@ -39,17 +38,31 @@ namespace CaixaEletronico.Processors
             Console.WriteLine("***************************************");
             Console.WriteLine("************RELATÓRIO*************");
 
-            Console.WriteLine($"10 Reais - {carteira.Notas10 * 10}");
-            Console.WriteLine($"20 Reais - {carteira.Notas20 * 20}");
-            Console.WriteLine($"50 Reais - {carteira.Notas50 * 50}");
+            Console.WriteLine($"10 Reais - {carteira.Notas10}");
+            Console.WriteLine($"20 Reais - {carteira.Notas20}");
+            Console.WriteLine($"50 Reais - {carteira.Notas50}");
             Console.ReadKey();
         }
 
-        public int AdicionarQuantidades()
+        public int AdicionarQuantidades(Carteira carteira, Notas nota)
         {
             Console.Clear();
             Console.WriteLine($"Digite a quantidade de cédulas:");
-            var quantidade = Console.ReadLine();
+            var quantidade = Convert.ToInt32(Console.ReadLine());
+
+            switch (nota)
+            {
+                case Notas.Notas10:
+                    _deposito.DepositoNota10(ref carteira, quantidade);
+                    break;
+                case Notas.Notas20:
+                    _deposito.DepositoNota20(ref carteira, quantidade);
+                    break;
+                case Notas.Notas50:
+                    _deposito.DepositoNota50(ref carteira, quantidade);
+                    break;
+            }
+
             Console.Clear();
 
             return Convert.ToInt32(quantidade);
