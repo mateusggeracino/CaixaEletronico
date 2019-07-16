@@ -16,20 +16,30 @@ namespace CaixaEletronico.Processors
             _saque = new Sacar();
         }
 
-        public int MostrarMenu()
+        public void MostrarMenu()
         {
             Console.Clear();
             Console.WriteLine("********************************************");
-            Console.WriteLine("-------------CARREGAR NOTAS ------------");
+            Console.WriteLine("-------------CAIXA ELETRÔNICO------------");
             Console.WriteLine("********************************************");
-            Console.WriteLine("1 - 10");
-            Console.WriteLine("2 - 20");
-            Console.WriteLine("3 - 50");
-            Console.WriteLine("4 - Saque");
-            Console.WriteLine("5 - Relatorio");
-            Console.WriteLine("6 - Sair");
-            var opcao = Console.ReadLine();
+            Console.WriteLine("1 - Deposito");
+            Console.WriteLine("2 - Saque");
+            Console.WriteLine("3 - Relatorio");
+            Console.WriteLine("4 - Sair");
+        }
 
+        public void MostrarMenuDeposito()
+        {
+            Console.Clear();
+            Console.WriteLine("Seleciona a célula a depositar: ");
+            Console.WriteLine("1 - R$ 10,00");
+            Console.WriteLine("2 - R$ 20,00");
+            Console.WriteLine("3 - R$ 50,00");
+        }
+        
+        public int PegaInput()
+        {
+            var opcao = Console.ReadLine();
             return Convert.ToInt32(opcao);
         }
 
@@ -39,34 +49,40 @@ namespace CaixaEletronico.Processors
             Console.WriteLine("***************************************");
             Console.WriteLine("************RELATÓRIO*************");
 
-            Console.WriteLine($"10 Reais - {carteira.Notas10}");
-            Console.WriteLine($"20 Reais - {carteira.Notas20}");
-            Console.WriteLine($"50 Reais - {carteira.Notas50}");
+            Console.WriteLine($"R$ 10,00  - {carteira.Notas10}");
+            Console.WriteLine($"R$ 20,00  - {carteira.Notas20}");
+            Console.WriteLine($"R$ 50,00  - {carteira.Notas50}");
+
+            Console.WriteLine("\nDigite qualquer tecla para continuar");
             Console.ReadKey();
         }
 
-        public int Depositar(Carteira carteira, Notas nota)
+        public void DigitarQuantidadeCeulas()
         {
             Console.Clear();
             Console.WriteLine("Digite a quantidade de cédulas:");
-            var quantidade = Convert.ToInt32(Console.ReadLine());
+        }
 
-            switch (nota)
+        public void RealizarDeposito(ref Carteira carteira)
+        {
+            MostrarMenuDeposito();
+            var opcao = PegaInput();
+
+            DigitarQuantidadeCeulas();
+            var quantidade = PegaInput();
+
+            switch (opcao)
             {
-                case Notas.Notas10:
+                case 1:
                     _deposito.DepositoNota10(ref carteira, quantidade);
                     break;
-                case Notas.Notas20:
+                case 2:
                     _deposito.DepositoNota20(ref carteira, quantidade);
                     break;
-                case Notas.Notas50:
+                case 3:
                     _deposito.DepositoNota50(ref carteira, quantidade);
                     break;
             }
-
-            Console.Clear();
-
-            return Convert.ToInt32(quantidade);
         }
 
         public void RealizarSaque(ref Carteira carteira)

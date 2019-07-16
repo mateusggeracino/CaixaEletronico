@@ -11,26 +11,23 @@ namespace CaixaEletronico
             ICaixaEletronico caixaEletronico = new CaixaEletronicoProcessor();
             var carteira = new Carteira();
             var sair = false;
+
             do{
-                var opcao = caixaEletronico.MostrarMenu();
+                caixaEletronico.MostrarMenu();
+                var opcao = caixaEletronico.PegaInput();
+
                 switch (opcao)
                 {
                     case 1:
-                        caixaEletronico.Depositar(carteira, Notas.Notas10);
+                        caixaEletronico.RealizarDeposito(ref carteira);
                         break;
                     case 2:
-                        caixaEletronico.Depositar(carteira, Notas.Notas20);
-                        break;
-                    case 3:
-                        caixaEletronico.Depositar(carteira, Notas.Notas50);
-                        break;
-                    case 4:
                         caixaEletronico.RealizarSaque(ref carteira);
                         break;
-                    case 5:
+                    case 3:
                         caixaEletronico.MostrarRelatorio(carteira);
                         break;
-                    case 6:
+                    case 4:
                         sair = true;
                         break;
                 }

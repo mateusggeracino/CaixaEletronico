@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Metadata.Ecma335;
 using CaixaEletronico.Interfaces;
 using CaixaEletronico.Model;
 
@@ -10,18 +11,22 @@ namespace CaixaEletronico.Business
         {
             var saldoCarteira = SaldoCarteira(carteira);
             if ((valorSaque > saldoCarteira) || valorSaque == 0) return "Saldo inválido";
-           
+
             return RealizarSaque(ref carteira, valorSaque);
         }
 
-        private decimal SaldoCarteira(Carteira carteira) =>
-            carteira.Notas10 + carteira.Notas20 + carteira.Notas50 + carteira.Notas100;
+        private decimal SaldoCarteira(Carteira carteira)
+        {
+            return carteira.Notas10 + carteira.Notas20 + carteira.Notas50 + carteira.Notas100;
+        }
 
         public string RealizarSaque(ref Carteira carteira, decimal valorSaque)
         {
             var quantidadeNotas10 = carteira.Notas10 != 0 ? carteira.Notas10 / 10 : 0;
             var quantidadeNotas20 = carteira.Notas20 != 0 ? carteira.Notas20 / 20 : 0;
             var quantidadeNotas50 = carteira.Notas50 != 0 ? carteira.Notas50 / 50 : 0;
+
+            //if(!VerificaQuantidadeNotas(quantidadeNotas10, quantidadeNotas20, quantidadeNotas50, valorSaque)) return "Quantidade de notas insuficiente";
 
             while (valorSaque != 0)
             {
@@ -31,6 +36,13 @@ namespace CaixaEletronico.Business
             }
 
             return "Saque realizado.";
+        }
+
+        private bool VerificaQuantidadeNotas(int quantidadeNotas10, int quantidadeNotas20, int quantidadeNotas50, decimal valorSaque)
+        {
+            if (valorSaque < 50 && quantidadeNotas50 >= 1 && quantidadeNotas10 == 0 && quantidadeNotas20 == 0) return false;
+
+            return true;
         }
 
         private void RemoverValorNota10(ref Carteira carteira, ref decimal valorSaque, ref int quantidadeNotas10)
