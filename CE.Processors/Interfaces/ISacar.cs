@@ -1,6 +1,6 @@
-﻿using CaixaEletronico.Model;
+﻿using CE.Processors.Models;
 
-namespace CaixaEletronico.Interfaces
+namespace CE.Processors.Interfaces
 {
     public interface ISacar
     {

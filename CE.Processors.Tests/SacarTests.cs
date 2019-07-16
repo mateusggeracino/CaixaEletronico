@@ -1,9 +1,9 @@
-ï»¿using System.Linq;
-using CaixaEletronico.Business;
-using CaixaEletronico.Model;
+using CE.Processors.Business;
+using CE.Processors.Models;
+using System.Linq;
 using Xunit;
 
-namespace CaixaEletronico.Tests
+namespace CE.Processors.Tests
 {
     public class SacarTests
     {
@@ -56,9 +56,9 @@ namespace CaixaEletronico.Tests
 
             //Act
             var retorno = saque.RealizarSaque(ref carteira, valorSaque);
-            
+
             //Assert
-            Assert.Equal("VocÃª nÃ£o tem notas suficientes.", retorno);
+            Assert.Equal("Você não tem notas suficientes.", retorno);
         }
     }
 }

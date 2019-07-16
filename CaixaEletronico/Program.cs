@@ -1,6 +1,6 @@
-﻿using CaixaEletronico.Interfaces;
-using CaixaEletronico.Model;
-using CaixaEletronico.Processors;
+﻿using CE.Processors.Interfaces;
+using CE.Processors.Models;
+using CE.Processors.Processors;
 
 namespace CaixaEletronico
 {
@@ -31,7 +31,6 @@ namespace CaixaEletronico
                         sair = true;
                         break;
                 }
-
             } while (!sair);
         }
     }

@@ -1,30 +1,36 @@
-﻿using System.Linq;
-using CaixaEletronico.Interfaces;
-using CaixaEletronico.Model;
+﻿using CE.Processors.Interfaces;
+using CE.Processors.Models;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace CaixaEletronico.Business
+namespace CE.Processors.Business
 {
     public class Sacar : ISacar
     {
         public string RealizarSaque(ref Carteira carteira, decimal valorSaque)
         {
             var carteiraOrdenada = carteira.Cedulas.OrderByDescending(x => x.Valor).ToList();
-            if (valorSaque > carteira.ValorTotal) return "Aqui não tem cheque especial, otário.";
+            if (valorSaque > carteira.ValorTotal) return Labels.SemSaldo;
 
+            RemoverDinheiroCarteira(ref carteiraOrdenada, ref valorSaque);
+
+            if (valorSaque > 0) return Labels.NotasInsuficientes;
+            return Labels.SaldoEfetuado;
+        }
+
+        private void RemoverDinheiroCarteira(ref List<Notas> carteiraOrdenada, ref decimal valorSaque)
+        {
             foreach (var nota in carteiraOrdenada)
             {
                 if (valorSaque == 0) break;
                 if (nota.Quantidade == 0) continue;
-                
+
                 var retiraNota = (int)(valorSaque / nota.Valor);
                 if (retiraNota > nota.Quantidade && nota.Quantidade != 0) retiraNota = nota.Quantidade;
 
                 nota.Quantidade -= retiraNota;
                 valorSaque -= retiraNota * nota.Valor;
             }
-
-            if (valorSaque > 0) return "Você não tem notas suficientes.";
-            return "Saque efetuado com sucesso. Você está mais pobre.";
         }
     }
 }

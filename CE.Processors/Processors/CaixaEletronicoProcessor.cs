@@ -1,16 +1,17 @@
-﻿using CaixaEletronico.Business;
-using CaixaEletronico.Interfaces;
-using CaixaEletronico.Model;
+﻿using CE.Processors.Business;
+using CE.Processors.Interfaces;
+using CE.Processors.Models;
 using System;
 using System.Collections.Generic;
 
-namespace CaixaEletronico.Processors
+namespace CE.Processors.Processors
 {
     public class CaixaEletronicoProcessor : ICaixaEletronico
     {
         private readonly IDepositar _deposito;
         private readonly ISacar _saque;
-        private readonly List<Notas> _Cedulas;
+        private List<Notas> _Cedulas;
+
         public CaixaEletronicoProcessor()
         {
             _Cedulas = Notas.ObterNotas();
@@ -21,23 +22,24 @@ namespace CaixaEletronico.Processors
         public void MostrarMenu()
         {
             Console.Clear();
-            Console.WriteLine("********************************************");
-            Console.WriteLine("-------------CAIXA ELETRÔNICO------------");
-            Console.WriteLine("********************************************");
-            Console.WriteLine("1 - Deposito");
-            Console.WriteLine("2 - Saque");
-            Console.WriteLine("3 - Relatorio");
-            Console.WriteLine("4 - Sair");
+            Console.WriteLine(Labels.AsteriscosParaMenu);
+            Console.WriteLine(Labels.AsteriscosCaixaEletronico);
+            Console.WriteLine(Labels.AsteriscosParaMenu);
+
+            Console.WriteLine(Labels.OpcaoDeposito);
+            Console.WriteLine(Labels.OpcaoSaque);
+            Console.WriteLine(Labels.OpcaoRelatorio);
+            Console.WriteLine(Labels.OpcaoSair);
         }
 
         public void MostrarMenuDeposito()
         {
             Console.Clear();
-            Console.WriteLine("Selecione o valor da cédula: ");
+            Console.WriteLine(Labels.SelecionarCedula);
 
             for (var index = 0; index < _Cedulas.Count; index++)
             {
-                Console.WriteLine($"{index} - {_Cedulas[index].Nota}");
+                Console.WriteLine(string.Format(Labels.ApresentarNotas, index, _Cedulas[index].Nota));
             }
         }
 
@@ -50,14 +52,16 @@ namespace CaixaEletronico.Processors
         public void MostrarRelatorio(Carteira carteira)
         {
             Console.Clear();
-            Console.WriteLine("***************************************");
-            Console.WriteLine("************RELATÓRIO*************");
+            Console.WriteLine(Labels.AsteriscosParaMenu);
+            Console.WriteLine(Labels.AsteriscosRelatorio);
+            Console.WriteLine(Labels.AsteriscosParaMenu);
 
             foreach (var cedula in carteira.Cedulas)
             {
-                Console.WriteLine($"Valor Total de {cedula.Nota} - R$ {cedula.Valor * cedula.Quantidade}");
+                var linhaRelatorio = string.Format(Labels.ValorTotalNotaRelatorio, cedula.Nota, cedula.Valor * cedula.Quantidade);
+                Console.WriteLine(linhaRelatorio);
             }
-            Console.WriteLine($"Saldo total - R$ {carteira.ValorTotal}");
+            Console.WriteLine(string.Format(Labels.SaldoCarteira, carteira.ValorTotal));
 
             PressioneQualquerTecla();
         }
@@ -65,7 +69,7 @@ namespace CaixaEletronico.Processors
         public void DigitarQuantidadeCeulas()
         {
             Console.Clear();
-            Console.WriteLine("Digite a quantidade de cédulas:");
+            Console.WriteLine(Labels.DigiteQuantidadeNota);
         }
 
         public void RealizarDeposito(ref Carteira carteira)
@@ -82,18 +86,18 @@ namespace CaixaEletronico.Processors
         public void RealizarSaque(ref Carteira carteira)
         {
             Console.Clear();
-            Console.WriteLine("Digite o valor para saque:");
+            Console.WriteLine(Labels.DigiteValorSaque);
             var valorSaque = Convert.ToDecimal(Console.ReadLine());
 
             var resultado = _saque.RealizarSaque(ref carteira, valorSaque);
             Console.WriteLine(resultado);
-            
+
             PressioneQualquerTecla();
         }
 
         private void PressioneQualquerTecla()
         {
-            Console.WriteLine("\nPressione enter para continuar");
+            Console.WriteLine(Labels.PressioneParaContinuar);
             Console.ReadKey();
         }
     }

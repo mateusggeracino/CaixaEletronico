@@ -1,9 +1,9 @@
-using CaixaEletronico.Business;
-using CaixaEletronico.Model;
+﻿using CE.Processors.Business;
+using CE.Processors.Models;
 using System.Linq;
 using Xunit;
 
-namespace CaixaEletronico.Tests
+namespace CE.Processors.Tests
 {
     public class DepositarTests
     {
@@ -37,7 +37,7 @@ namespace CaixaEletronico.Tests
         {
             //Arrange
             var notasDisponiveis = Notas.ObterNotas();
-            if (!notasDisponiveis.Any())Assert.False(false);
+            if (!notasDisponiveis.Any()) Assert.False(false);
 
             var posicaoNota = notasDisponiveis.IndexOf(notasDisponiveis.Where(x => x.Valor == valor).First());
             var notaSelecionada = notasDisponiveis.Where(x => x.Valor == valor).First();

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using CE.Processors.Interfaces;
+using CE.Processors.Models;
+using System.Collections.Generic;
 using System.Linq;
-using CaixaEletronico.Interfaces;
-using CaixaEletronico.Model;
 
-namespace CaixaEletronico.Business
+namespace CE.Processors.Business
 {
     public class Depositar : IDepositar
     {

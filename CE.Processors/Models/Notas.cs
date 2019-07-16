@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace CaixaEletronico.Model
+namespace CE.Processors.Models
 {
     public class Notas
     {
@@ -10,7 +9,8 @@ namespace CaixaEletronico.Model
         {
             var notas = new List<Notas>
             {
-                new Notas {Nota = "R$ 0,50", Valor = Convert.ToDecimal(0.5)},
+                //new Notas {Nota = "R$ 0,50", Valor = Convert.ToDecimal(0.5)},
+                new Notas {Nota = "R$ 100,00", Valor = 100},
                 new Notas {Nota = "R$ 50,00", Valor = 50},
                 new Notas {Nota = "R$ 20,00", Valor = 20},
                 new Notas {Nota = "R$ 10,00", Valor = 10},

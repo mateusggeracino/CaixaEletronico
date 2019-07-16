@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace CaixaEletronico.Model
+namespace CE.Processors.Models
 {
     public class Carteira
     {
