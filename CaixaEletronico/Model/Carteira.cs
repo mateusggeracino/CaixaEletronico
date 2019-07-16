@@ -1,10 +1,22 @@
-﻿namespace CaixaEletronico.Model
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CaixaEletronico.Model
 {
     public class Carteira
     {
-        public int Notas10 { get; set; }
-        public int Notas20 { get; set; }
-        public int Notas50 { get; set; }
-        public int Notas100 { get; set; }
+        public Carteira()
+        {
+            Cedulas = new Dictionary<Notas, int>();
+        }
+
+        public Dictionary<Notas, int> Cedulas { get; set; }
+        public decimal ValorTotal { get; set; }
+
+        public static List<Notas> ObterListaCedulas()
+        {
+            return Enum.GetValues(typeof(Notas)).Cast<Notas>().ToList();
+        }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using CaixaEletronico.Business;
 using CaixaEletronico.Interfaces;
 using CaixaEletronico.Model;
@@ -9,11 +11,12 @@ namespace CaixaEletronico.Processors
     {
         private readonly IDepositar _deposito;
         private readonly ISacar _saque;
-
+        private readonly List<Notas> _Cedulas;
         public CaixaEletronicoProcessor()
         {
+            _Cedulas = Carteira.ObterListaCedulas();
             _deposito = new Depositar();
-            _saque = new Sacar();
+            //_saque = new Sacar();
         }
 
         public void MostrarMenu()
@@ -31,12 +34,14 @@ namespace CaixaEletronico.Processors
         public void MostrarMenuDeposito()
         {
             Console.Clear();
-            Console.WriteLine("Seleciona a célula a depositar: ");
-            Console.WriteLine("1 - R$ 10,00");
-            Console.WriteLine("2 - R$ 20,00");
-            Console.WriteLine("3 - R$ 50,00");
+            Console.WriteLine("Selecione o valor da cédula: ");
+            
+            for (var i = 0; i < _Cedulas.Count(); i++)
+            {
+                Console.WriteLine($"{i} - R$ {_Cedulas[i]}");
+            }
         }
-        
+
         public int PegaInput()
         {
             var opcao = Console.ReadLine();
@@ -49,9 +54,10 @@ namespace CaixaEletronico.Processors
             Console.WriteLine("***************************************");
             Console.WriteLine("************RELATÓRIO*************");
 
-            Console.WriteLine($"R$ 10,00  - {carteira.Notas10}");
-            Console.WriteLine($"R$ 20,00  - {carteira.Notas20}");
-            Console.WriteLine($"R$ 50,00  - {carteira.Notas50}");
+            foreach(var teste in Enum.GetValues(typeof(Notas)))
+            {
+                Console.WriteLine(teste);
+            }
 
             Console.WriteLine("\nDigite qualquer tecla para continuar");
             Console.ReadKey();
@@ -66,23 +72,12 @@ namespace CaixaEletronico.Processors
         public void RealizarDeposito(ref Carteira carteira)
         {
             MostrarMenuDeposito();
-            var opcao = PegaInput();
+            var indexNota = PegaInput();
 
             DigitarQuantidadeCeulas();
             var quantidade = PegaInput();
 
-            switch (opcao)
-            {
-                case 1:
-                    _deposito.DepositoNota10(ref carteira, quantidade);
-                    break;
-                case 2:
-                    _deposito.DepositoNota20(ref carteira, quantidade);
-                    break;
-                case 3:
-                    _deposito.DepositoNota50(ref carteira, quantidade);
-                    break;
-            }
+            _deposito.RealizarDeposito(ref carteira, (Notas)indexNota, quantidade);
         }
 
         public void RealizarSaque(ref Carteira carteira)
