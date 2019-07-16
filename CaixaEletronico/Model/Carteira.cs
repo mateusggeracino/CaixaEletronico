@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace CaixaEletronico.Model
@@ -8,15 +7,13 @@ namespace CaixaEletronico.Model
     {
         public Carteira()
         {
-            Cedulas = new Dictionary<Notas, int>();
+            Cedulas = new List<Notas>();
         }
+        public List<Notas> Cedulas { get; set; }
 
-        public Dictionary<Notas, int> Cedulas { get; set; }
-        public decimal ValorTotal { get; set; }
-
-        public static List<Notas> ObterListaCedulas()
+        public decimal ValorTotal
         {
-            return Enum.GetValues(typeof(Notas)).Cast<Notas>().ToList();
+            get { return Cedulas.Sum(x => (x.Valor * x.Quantidade)); }
         }
     }
 }

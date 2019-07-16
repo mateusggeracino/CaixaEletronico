@@ -1,71 +1,98 @@
+using CaixaEletronico.Business;
+using CaixaEletronico.Model;
+using System.Linq;
+using Xunit;
+
 namespace CaixaEletronico.Tests
 {
     public class DepositarTests
     {
-        //[Fact]
-        //public void DepositarNota10Sucesso()
-        //{
-        //    var carteira = new Carteira();
-        //    var depositar = new Depositar();
+        [Fact]
+        public void DepositoSucesso()
+        {
+            //Arrange
+            var notasDisponiveis = Notas.ObterNotas();
+            if (!notasDisponiveis.Any())
+            {
+                Assert.False(false);
+            }
 
-        //    depositar.DepositoNota10(ref carteira, 1);
+            var notaSelecionada = notasDisponiveis.First();
+            var carteira = new Carteira();
+            var deposito = new Depositar();
+            int posicaoNota = 0, quantidade = 5;
 
-        //    Assert.True((10 * 1) == carteira.Notas10);
-        //}
+            //Act
+            deposito.RealizarDeposito(ref carteira, posicaoNota, quantidade, notasDisponiveis);
 
-        //[Fact]
-        //public void DepositarNota20Sucesso()
-        //{
-        //    var carteira = new Carteira();
-        //    var depositar = new Depositar();
+            //Assert
+            Assert.True(carteira.ValorTotal == (notaSelecionada.Valor * quantidade));
+        }
 
-        //    depositar.DepositoNota20(ref carteira, 2);
+        [Theory]
+        [InlineData(50, 2)]
+        [InlineData(10, 10)]
+        [InlineData(20, 5)]
+        public void DepositoVariadoSucesso(int valor, int quantidade)
+        {
+            //Arrange
+            var notasDisponiveis = Notas.ObterNotas();
+            if (!notasDisponiveis.Any())Assert.False(false);
 
-        //    Assert.True((20 * 2) == carteira.Notas20);
-        //}
+            var posicaoNota = notasDisponiveis.IndexOf(notasDisponiveis.Where(x => x.Valor == valor).First());
+            var notaSelecionada = notasDisponiveis.Where(x => x.Valor == valor).First();
+            var carteira = new Carteira();
+            var deposito = new Depositar();
 
-        //[Fact]
-        //public void DepositarNota50Sucesso()
-        //{
-        //    var carteira = new Carteira();
-        //    var depositar = new Depositar();
+            //Act
+            deposito.RealizarDeposito(ref carteira, posicaoNota, quantidade, notasDisponiveis);
 
-        //    depositar.DepositoNota50(ref carteira, 3);
+            //Assert
+            Assert.True(carteira.ValorTotal == (notaSelecionada.Valor * quantidade));
+        }
 
-        //    Assert.True((50 * 3) == carteira.Notas50);
-        //}
+        [Fact]
+        public void DepositoFalha()
+        {
+            //Arrange
+            var notasDisponiveis = Notas.ObterNotas();
+            if (!notasDisponiveis.Any())
+            {
+                Assert.False(false);
+            }
 
-        //[Fact]
-        //public void DepositarNota10Falha()
-        //{
-        //    var carteira = new Carteira();
-        //    var depositar = new Depositar();
+            var notaSelecionada = notasDisponiveis.First();
+            var carteira = new Carteira();
+            var deposito = new Depositar();
+            int posicaoNota = 0, quantidade = 5;
 
-        //    depositar.DepositoNota10(ref carteira, 1);
+            //Act
+            deposito.RealizarDeposito(ref carteira, posicaoNota, quantidade, notasDisponiveis);
 
-        //    Assert.False((10 * 1) != carteira.Notas10);
-        //}
+            //Assert
+            Assert.False(carteira.ValorTotal != (notaSelecionada.Valor * quantidade));
+        }
 
-        //[Fact]
-        //public void DepositarNota20Falha()
-        //{
-        //    var carteira = new Carteira();
-        //    var depositar = new Depositar();
+        [Theory]
+        [InlineData(50, 2)]
+        [InlineData(10, 10)]
+        [InlineData(20, 5)]
+        public void DepositoVariadoFalha(int valor, int quantidade)
+        {
+            //Arrange
+            var notasDisponiveis = Notas.ObterNotas();
+            if (!notasDisponiveis.Any()) Assert.False(false);
 
-        //    depositar.DepositoNota20(ref carteira, 2);
+            var posicaoNota = notasDisponiveis.IndexOf(notasDisponiveis.Where(x => x.Valor == valor).First());
+            var notaSelecionada = notasDisponiveis.Where(x => x.Valor == valor).First();
+            var carteira = new Carteira();
+            var deposito = new Depositar();
 
-        //    Assert.False((20 * 2) != carteira.Notas20);
-        //}
+            //Act
+            deposito.RealizarDeposito(ref carteira, posicaoNota, quantidade, notasDisponiveis);
 
-        //[Fact]
-        //public void DepositarNota50Falha()
-        //{
-        //    var carteira = new Carteira();
-        //    var depositar = new Depositar();
-
-        //    depositar.DepositoNota50(ref carteira, 3);
-
-        //    Assert.False((50 * 3) != carteira.Notas50);
-        //}
+            //Assert
+            Assert.False(carteira.ValorTotal != (notaSelecionada.Valor * quantidade));
+        }
     }
 }

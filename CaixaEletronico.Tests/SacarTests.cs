@@ -1,35 +1,64 @@
-﻿namespace CaixaEletronico.Tests
+﻿using System.Linq;
+using CaixaEletronico.Business;
+using CaixaEletronico.Model;
+using Xunit;
+
+namespace CaixaEletronico.Tests
 {
     public class SacarTests
     {
-        //[Fact]
-        //public void RealizarSaqueSucesso()
-        //{
-        //    var carteira = new Carteira
-        //    {
-        //        Notas50 = 250,
-        //        Notas10 = 50
-        //    };
-        //    var saque = new Sacar();
+        [Fact]
+        public void SacarSucesso()
+        {
+            //Arrange
+            var saque = new Sacar();
+            var carteira = new Carteira { Cedulas = Notas.ObterNotas() };
+            carteira.Cedulas.ForEach(x => x.Quantidade = 1);
+            var valorSaque = 120;
 
-        //    var result = saque.Saque(ref carteira, 210);
+            //Act
+            saque.RealizarSaque(ref carteira, valorSaque);
+            var nota100 = carteira.Cedulas.Where(x => x.Valor == 100).First();
+            var nota20 = carteira.Cedulas.Where(x => x.Valor == 20).First();
 
-        //    Assert.True(carteira.Notas50 == 50 || carteira.Notas10 == 40);
-        //}
+            //Assert
+            Assert.True(nota100.Quantidade == 0);
+            Assert.True(nota20.Quantidade == 0);
+        }
 
-        //[Fact]
-        //public void RealizarSaqueFalha()
-        //{
-        //    var carteira = new Carteira
-        //    {
-        //        Notas50 = 250,
-        //        Notas10 = 50
-        //    };
-        //    var saque = new Sacar();
+        [Fact]
+        public void SacarDiversasNotasSucesso()
+        {
+            //Arrange
+            var saque = new Sacar();
+            var carteira = new Carteira { Cedulas = Notas.ObterNotas() };
+            carteira.Cedulas.ForEach(x => x.Quantidade = 2);
+            var valorSaque = 80;
 
-        //    var result = saque.Saque(ref carteira, 210);
+            //Act
+            saque.RealizarSaque(ref carteira, valorSaque);
+            var nota50 = carteira.Cedulas.Where(x => x.Valor == 50).First();
+            var nota20 = carteira.Cedulas.Where(x => x.Valor == 20).First();
+            var nota10 = carteira.Cedulas.Where(x => x.Valor == 10).First();
 
-        //    Assert.False(carteira.Notas50 != 50 || carteira.Notas10 != 40);
-        //}
+            //Assert
+            Assert.True(nota50.Quantidade == 1 && nota20.Quantidade == 1 && nota10.Quantidade == 1);
+        }
+
+        [Fact]
+        public void TesteSucesso()
+        {
+            //Arrange
+            var saque = new Sacar();
+            var carteira = new Carteira { Cedulas = Notas.ObterNotas() };
+            carteira.Cedulas.Where(x => x.Valor == 50).First().Quantidade = 1;
+            var valorSaque = 20;
+
+            //Act
+            var retorno = saque.RealizarSaque(ref carteira, valorSaque);
+            
+            //Assert
+            Assert.Equal("Você não tem notas suficientes.", retorno);
+        }
     }
 }

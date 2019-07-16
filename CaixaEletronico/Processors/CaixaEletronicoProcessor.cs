@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CaixaEletronico.Business;
+﻿using CaixaEletronico.Business;
 using CaixaEletronico.Interfaces;
 using CaixaEletronico.Model;
+using System;
+using System.Collections.Generic;
 
 namespace CaixaEletronico.Processors
 {
@@ -14,9 +13,9 @@ namespace CaixaEletronico.Processors
         private readonly List<Notas> _Cedulas;
         public CaixaEletronicoProcessor()
         {
-            _Cedulas = Carteira.ObterListaCedulas();
+            _Cedulas = Notas.ObterNotas();
             _deposito = new Depositar();
-            //_saque = new Sacar();
+            _saque = new Sacar();
         }
 
         public void MostrarMenu()
@@ -35,10 +34,10 @@ namespace CaixaEletronico.Processors
         {
             Console.Clear();
             Console.WriteLine("Selecione o valor da cédula: ");
-            
-            for (var i = 0; i < _Cedulas.Count(); i++)
+
+            for (var index = 0; index < _Cedulas.Count; index++)
             {
-                Console.WriteLine($"{i} - R$ {_Cedulas[i]}");
+                Console.WriteLine($"{index} - {_Cedulas[index].Nota}");
             }
         }
 
@@ -54,13 +53,13 @@ namespace CaixaEletronico.Processors
             Console.WriteLine("***************************************");
             Console.WriteLine("************RELATÓRIO*************");
 
-            foreach(var teste in Enum.GetValues(typeof(Notas)))
+            foreach (var cedula in carteira.Cedulas)
             {
-                Console.WriteLine(teste);
+                Console.WriteLine($"Valor Total de {cedula.Nota} - R$ {cedula.Valor * cedula.Quantidade}");
             }
+            Console.WriteLine($"Saldo total - R$ {carteira.ValorTotal}");
 
-            Console.WriteLine("\nDigite qualquer tecla para continuar");
-            Console.ReadKey();
+            PressioneQualquerTecla();
         }
 
         public void DigitarQuantidadeCeulas()
@@ -77,7 +76,7 @@ namespace CaixaEletronico.Processors
             DigitarQuantidadeCeulas();
             var quantidade = PegaInput();
 
-            _deposito.RealizarDeposito(ref carteira, (Notas)indexNota, quantidade);
+            _deposito.RealizarDeposito(ref carteira, indexNota, quantidade, _Cedulas);
         }
 
         public void RealizarSaque(ref Carteira carteira)
@@ -86,9 +85,15 @@ namespace CaixaEletronico.Processors
             Console.WriteLine("Digite o valor para saque:");
             var valorSaque = Convert.ToDecimal(Console.ReadLine());
 
-            var resultado = _saque.Saque(ref carteira, valorSaque);
+            var resultado = _saque.RealizarSaque(ref carteira, valorSaque);
             Console.WriteLine(resultado);
-            Console.WriteLine("Pressione enter para continuar");
+            
+            PressioneQualquerTecla();
+        }
+
+        private void PressioneQualquerTecla()
+        {
+            Console.WriteLine("\nPressione enter para continuar");
             Console.ReadKey();
         }
     }
