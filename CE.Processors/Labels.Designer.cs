@@ -19,7 +19,7 @@ namespace CE.Processors {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Labels {
@@ -178,7 +178,7 @@ namespace CE.Processors {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saque efetuado com sucesso. Você está mais pobre..
+        ///   Looks up a localized string similar to Saque efetuado com sucesso..
         /// </summary>
         internal static string SaldoEfetuado {
             get {
@@ -196,11 +196,20 @@ namespace CE.Processors {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aqui não tem cheque especial, otário..
+        ///   Looks up a localized string similar to Aqui não tem cheque especial..
         /// </summary>
         internal static string SemSaldo {
             get {
                 return ResourceManager.GetString("SemSaldo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teste 123.
+        /// </summary>
+        internal static string Teste {
+            get {
+                return ResourceManager.GetString("Teste", resourceCulture);
             }
         }
         
