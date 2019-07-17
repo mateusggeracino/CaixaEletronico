@@ -7,11 +7,16 @@ namespace CE.Processors.Business
 {
     public class Depositar : IDepositar
     {
-        public void RealizarDeposito(ref Carteira carteira, int indexNota, int quantidade, List<Notas> cedulas)
+        public void RealizarDeposito(Carteira carteira, int indexNota, int quantidade, List<Notas> cedulas)
         {
             var notaAdicionada = cedulas[indexNota];
             var nota = carteira.Cedulas.Where(x => x.Valor == notaAdicionada.Valor);
 
+            AdicionarValorCarteira(carteira, notaAdicionada, nota, quantidade);
+        }
+
+        private void AdicionarValorCarteira(Carteira carteira, Notas notaAdicionada, IEnumerable<Notas> nota, int quantidade)
+        {
             if (nota.Any())
                 nota.First().Quantidade += quantidade;
             else

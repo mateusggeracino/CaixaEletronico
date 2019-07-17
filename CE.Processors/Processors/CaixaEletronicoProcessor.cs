@@ -6,17 +6,19 @@ using System.Collections.Generic;
 
 namespace CE.Processors.Processors
 {
-    public class CaixaEletronicoProcessor : ICaixaEletronico
+    public class CaixaEletronicoProcessor
     {
         private readonly IDepositar _deposito;
         private readonly ISacar _saque;
+        private readonly IRelatorio _relatorio;
         private List<Notas> _Cedulas;
-
-        public CaixaEletronicoProcessor()
+        
+        public CaixaEletronicoProcessor(IDepositar depositar, ISacar sacar, IRelatorio relatorio)
         {
             _Cedulas = Notas.ObterNotas();
-            _deposito = new Depositar();
-            _saque = new Sacar();
+            _deposito = depositar;
+            _saque = sacar;
+            _relatorio = relatorio;
         }
 
         public void MostrarMenu()
@@ -56,13 +58,7 @@ namespace CE.Processors.Processors
             Console.WriteLine(Labels.AsteriscosRelatorio);
             Console.WriteLine(Labels.AsteriscosParaMenu);
 
-            foreach (var cedula in carteira.Cedulas)
-            {
-                var linhaRelatorio = string.Format(Labels.ValorTotalNotaRelatorio, cedula.Nota, cedula.Valor * cedula.Quantidade);
-                Console.WriteLine(linhaRelatorio);
-            }
-            Console.WriteLine(string.Format(Labels.SaldoCarteira, carteira.ValorTotal));
-
+            _relatorio.ObterRelatorio(carteira);
             PressioneQualquerTecla();
         }
 
@@ -72,7 +68,7 @@ namespace CE.Processors.Processors
             Console.WriteLine(Labels.DigiteQuantidadeNota);
         }
 
-        public void RealizarDeposito(ref Carteira carteira)
+        public void RealizarDeposito(Carteira carteira)
         {
             MostrarMenuDeposito();
             var indexNota = PegaInput();
@@ -80,16 +76,16 @@ namespace CE.Processors.Processors
             DigitarQuantidadeCeulas();
             var quantidade = PegaInput();
 
-            _deposito.RealizarDeposito(ref carteira, indexNota, quantidade, _Cedulas);
+            _deposito.RealizarDeposito(carteira, indexNota, quantidade, _Cedulas);
         }
 
-        public void RealizarSaque(ref Carteira carteira)
+        public void RealizarSaque(Carteira carteira)
         {
             Console.Clear();
             Console.WriteLine(Labels.DigiteValorSaque);
             var valorSaque = Convert.ToDecimal(Console.ReadLine());
 
-            var resultado = _saque.RealizarSaque(ref carteira, valorSaque);
+            var resultado = _saque.RealizarSaque(carteira, valorSaque);
             Console.WriteLine(resultado);
 
             PressioneQualquerTecla();

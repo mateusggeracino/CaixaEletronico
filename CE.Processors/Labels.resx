@@ -157,13 +157,16 @@
     <value>Saldo total - R$ {0}</value>
   </data>
   <data name="SaldoEfetuado" xml:space="preserve">
-    <value>Saque efetuado com sucesso. Você está mais pobre.</value>
+    <value>Saque efetuado com sucesso.</value>
   </data>
   <data name="SelecionarCedula" xml:space="preserve">
     <value>Selecione o valor da cédula:</value>
   </data>
   <data name="SemSaldo" xml:space="preserve">
-    <value>Aqui não tem cheque especial, otário.</value>
+    <value>Aqui não tem cheque especial.</value>
+  </data>
+  <data name="Teste" xml:space="preserve">
+    <value>Teste 123</value>
   </data>
   <data name="ValorTotalNotaRelatorio" xml:space="preserve">
     <value>Valor Total de {0} - R$ {1}</value>

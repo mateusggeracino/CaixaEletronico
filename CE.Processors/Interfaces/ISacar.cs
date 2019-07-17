@@ -4,6 +4,6 @@ namespace CE.Processors.Interfaces
 {
     public interface ISacar
     {
-        string RealizarSaque(ref Carteira carteira, decimal valor);
+        string RealizarSaque(Carteira carteira, decimal valor);
     }
 }

@@ -1,4 +1,5 @@
-﻿using CE.Processors.Interfaces;
+﻿using CE.Processors.Business;
+using CE.Processors.Interfaces;
 using CE.Processors.Models;
 using CE.Processors.Processors;
 
@@ -8,7 +9,7 @@ namespace CaixaEletronico
     {
         static void Main(string[] args)
         {
-            ICaixaEletronico caixaEletronico = new CaixaEletronicoProcessor();
+            var caixaEletronico = new CaixaEletronicoProcessor(new Depositar(), new Sacar(), new Relatorio());
             var carteira = new Carteira();
             var sair = false;
 
@@ -19,10 +20,10 @@ namespace CaixaEletronico
                 switch (opcao)
                 {
                     case 1:
-                        caixaEletronico.RealizarDeposito(ref carteira);
+                        caixaEletronico.RealizarDeposito(carteira);
                         break;
                     case 2:
-                        caixaEletronico.RealizarSaque(ref carteira);
+                        caixaEletronico.RealizarSaque(carteira);
                         break;
                     case 3:
                         caixaEletronico.MostrarRelatorio(carteira);

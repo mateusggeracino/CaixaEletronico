@@ -5,6 +5,6 @@ namespace CE.Processors.Interfaces
 {
     public interface IDepositar
     {
-        void RealizarDeposito(ref Carteira carteira, int indexNota, int quantidade, List<Notas> cedulas);
+        void RealizarDeposito(Carteira carteira, int indexNota, int quantidade, List<Notas> cedulas);
     }
 }

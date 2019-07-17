@@ -7,18 +7,18 @@ namespace CE.Processors.Business
 {
     public class Sacar : ISacar
     {
-        public string RealizarSaque(ref Carteira carteira, decimal valorSaque)
+        public string RealizarSaque(Carteira carteira, decimal valorSaque)
         {
             var carteiraOrdenada = carteira.Cedulas.OrderByDescending(x => x.Valor).ToList();
             if (valorSaque > carteira.ValorTotal) return Labels.SemSaldo;
 
-            RemoverDinheiroCarteira(ref carteiraOrdenada, ref valorSaque);
+            RemoverDinheiroCarteira(carteiraOrdenada, ref valorSaque);
 
             if (valorSaque > 0) return Labels.NotasInsuficientes;
             return Labels.SaldoEfetuado;
         }
 
-        private void RemoverDinheiroCarteira(ref List<Notas> carteiraOrdenada, ref decimal valorSaque)
+        private void RemoverDinheiroCarteira(List<Notas> carteiraOrdenada, ref decimal valorSaque)
         {
             foreach (var nota in carteiraOrdenada)
             {
