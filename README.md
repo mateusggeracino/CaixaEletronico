@@ -1,8 +1,8 @@
 # CaixaEletronico
 Caixa eletrônico com funcionalidades de depósitos e priorização de saques. 
 
-## Branch - CaixaEletronicoGenerico
-[![Build status](https://ci.appveyor.com/api/projects/status/wxas2xaritwo9q78/branch/CaixaEletronicoGenerico?svg=true)](https://ci.appveyor.com/project/mateusggeracino/caixaeletronico/branch/master)
+
+[![Build status](https://ci.appveyor.com/api/projects/status/wxas2xaritwo9q78/branch/master?svg=true)](https://ci.appveyor.com/project/mateusggeracino/caixaeletronico/branch/master)
 
 ```cs
         static void Main(string[] args)
