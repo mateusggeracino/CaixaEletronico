@@ -1,5 +1,4 @@
-﻿using CE.Processors.Business;
-using CE.Processors.Interfaces;
+﻿using CE.Processors.Interfaces;
 using CE.Processors.Models;
 using System;
 using System.Collections.Generic;
@@ -41,7 +40,7 @@ namespace CE.Processors.Processors
 
             for (var index = 0; index < _Cedulas.Count; index++)
             {
-                Console.WriteLine(string.Format(Labels.ApresentarNotas, index, _Cedulas[index].Nota));
+                Console.WriteLine(Labels.ApresentarNotas, index, _Cedulas[index].Nota);
             }
         }
 
