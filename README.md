@@ -18,10 +18,10 @@ Caixa eletrônico com funcionalidades de depósitos e priorização de saques.
                 switch (opcao)
                 {
                     case 1:
-                        caixaEletronico.RealizarDeposito(ref carteira);
+                        caixaEletronico.RealizarDeposito(carteira);
                         break;
                     case 2:
-                        caixaEletronico.RealizarSaque(ref carteira);
+                        caixaEletronico.RealizarSaque(carteira);
                         break;
                     case 3:
                         caixaEletronico.MostrarRelatorio(carteira);
