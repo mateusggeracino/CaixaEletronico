@@ -7,7 +7,7 @@ Caixa eletrônico com funcionalidades de depósitos e priorização de saques.
 ```cs
         static void Main(string[] args)
         {
-            ICaixaEletronico caixaEletronico = new CaixaEletronicoProcessor();
+            var caixaEletronico = new CaixaEletronicoProcessor(new Depositar(), new Sacar(), new Relatorio());
             var carteira = new Carteira();
             var sair = false;
 
